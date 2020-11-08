@@ -39,10 +39,13 @@ def test_registration_existing_user():
 
 # login tests
 def test_login():
-    pass
+    auth.login("Test1", "Hesoyam1337")
+    assert auth.authentification_seccess()
 
 def test_login_wrong_username():
-    pass
+    auth.login("wrongusername", "Hesoyam1337")
+    assert not auth.authentification_seccess()
 
 def test_login_wrong_pass():
-    pass
+    auth.login("Test1", "wrongpassword")
+    assert not auth.authentification_seccess()
