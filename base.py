@@ -1,4 +1,3 @@
-from selenium import webdriver
 from xpath_config import SafeBoardXPaths
 
 
@@ -34,3 +33,10 @@ class Base:
         self.enter_word(username, SafeBoardXPaths.LOGIN_USERNAME)
         self.enter_word(username, SafeBoardXPaths.LOGIN_PASSWORD)
         self.click_on_element(SafeBoardXPaths.LOGIN_BUTTON)
+
+
+class HelperBooks(Base):
+
+    def __init__(self, driver):
+        super().__init__(driver)
+        self.driver.add_cookie({'sessionup': SafeBoardXPaths.SESSION_COOKIE})
