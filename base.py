@@ -1,6 +1,7 @@
 import locators_config as locators
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from selenium.common.exceptions import TimeoutException
 
 
 class Base:
@@ -12,11 +13,11 @@ class Base:
     def go_to_site(self):
         return self.driver.get(self.base_url)
 
-    def find_element(self, locator,time=10):
+    def find_element(self, locator,time=2):
         return WebDriverWait(self.driver,time).until(EC.presence_of_element_located(locator),
-                                                      message=f"Can't find element by locator {locator}")
+                                                      message=f"Can't find elements by locator {locator}")
 
-    def find_elements(self, locator,time=10):
+    def find_elements(self, locator,time=2):
         return WebDriverWait(self.driver,time).until(EC.presence_of_all_elements_located(locator),
                                                       message=f"Can't find elements by locator {locator}")
 
@@ -48,9 +49,17 @@ class AuthorizationHelper(Base):
         self.enter_text(username, locators.LOGIN_PASSWORD)
         self.click_on_element(locators.LOGIN_BUTTON)
 
-    def authentification_checker(self):
-        pass
-        #self.driver.find_element_by_id("signout")
+    def registration_seccess(self):
+        try:
+            return self.find_element(locators.REGISTRATION_SUCCESS).text
+        except TimeoutException:
+            return None
+
+    def authentification_seccess(self):
+        try:
+            return self.find_element(locators.SIGNOUT_BUTTON).text
+        except TimeoutException:
+            return None
 
 
 class HelperBooks(Base):

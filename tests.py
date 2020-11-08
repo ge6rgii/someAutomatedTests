@@ -1,19 +1,26 @@
 from selenium import webdriver
-from base import Base
-from xpath_config import SafeBoardXPaths
+from base import AuthorizationHelper
 
 
 driver = webdriver.Firefox()
+auth = AuthorizationHelper(driver)
 
-#registration tests
+
 def test_registration():
-    pass
+    auth.register("Jouny", "procoder1337", "Hesoyam1337", "Hesoyam1337")
+    assert auth.registration_seccess()
 
 def test_registration_without_name():
-    pass
+    auth.register("", "Test2", "Test2", "Test2")
+    assert auth.registration_seccess()
 
 def test_registration_username_check():
-    pass
+    auth.register("Georgii", "Test", "Hesoyam1337", "Hesoyam1337")
+    assert not auth.registration_seccess()
+
+def test_registration_without_name():
+    auth.register("", "Test2", "Test2", "Test2")
+    assert auth.registration_seccess()
 
 def test_registration_pass_check():
     pass
@@ -31,3 +38,7 @@ def test_login():
 
 def test_login_wrong_pass():
     pass
+
+"""
+Just some local tests
+"""
