@@ -78,5 +78,7 @@ class BooksHelper(Base):
         self.driver.get(f'{self.base_url}/books')
         all_books = self.find_elements(locators.BOOKS)
         self.books_data = [book.text.split('\n') for book in all_books if len(book.text) > 0]
+        self.current_prices = [book[-3].split()[0] for book in self.books_data]
+        self.previous_prices = [book[-2].split()[2] for book in self.books_data]
         self.ISBN13_codes = [book[0].split()[1].replace('-', '') for book in self.books_data]
         self.ISBN10_codes = [book[1].split()[1] for book in self.books_data]

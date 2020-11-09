@@ -14,7 +14,6 @@ def test_successful_signup():
     assert auth.signup_seccess()
 
 def test_successful_signup_username_with_numbers():
-    # Basic registration by following rules.
     auth.signup("Test", "Test2", "Pass1", "Pass1")
     assert auth.signup_seccess()
 
@@ -65,29 +64,33 @@ def test_failed_login_wrong_password():
 # Remove it in prod pleasseeeee.
 auth.signup("Test", "testuser", "Pass1", "Pass1")
 auth.login("testuser", "Pass1")
-# collecting books data for tests. I'm about to rewrite it
-books = BooksHelper(driver)
-books_data = books.get_books_data()
-
+# Collecting books data for tests.
+books.get_books_data()
 
 def test_valid_info_about_books():
-    pass
+    # checks if book has title, description, author and so on.
+    # P.S. I didn't notice that "The Way of the Web Tester.." hasn't description before this test.. 
+    insufficient_data = list(filter(lambda book_info: len(book_info) < 9, books.books_data))
+    assert not insufficient_data
 
 def test_all_prices_more_than_zero():
-    pass
+    incorrect_current_price = list(filter(lambda price: price != '0.00', books.current_prices))
+    incorrect_previous_price = list(filter(lambda price: price != '0.00', books.previous_prices))
+    assert not incorrect_current_price and not incorrect_previous_price
 
 def test_valid_ISBN13():
     # this test checks if all ISBN-13 codes has 13 numbers.
-    wrong_codes = list(filter(lambda x: len(x) != 13, books.ISBN13_codes))
+    wrong_codes = list(filter(lambda code: len(code) != 13, books.ISBN13_codes))
     assert not wrong_codes
 
 def test_valid_ISBN10():
     # checks if all ISBN-10 codes has 10 numbers in it.
-    wrong_codes = list(filter(lambda x: len(x) != 10, books.ISBN10_codes))
+    wrong_codes = list(filter(lambda code: len(code) != 10, books.ISBN10_codes))
     assert not wrong_codes
 
 def test_check_add_to_cart_buttons():
-    pass
+    books_without_add_to_cart_button = [book for book in books.books_data if book[-1] != 'Добавить в корзину']
+    assert not books_without_add_to_cart_button
 
 """
 just some basic tests
