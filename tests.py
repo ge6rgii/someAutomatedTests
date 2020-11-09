@@ -45,20 +45,20 @@ def test_failed_signup_existing_user():
 
 # login tests
 def test_successful_login():
-    login_success = auth.login("testuser", "Pass1")
-    assert login_success
+    auth.login("testuser", "Pass1")
+    assert auth.login_success()
 
 def test_successful_login_username_with_numbers():
-    login_success = auth.login("Test2", "Pass1")
-    assert login_success
+    auth.login("Test2", "Pass1")
+    assert auth.login_success()
 
 def test_failed_login_wrong_username():
-    login_success = auth.login("wrongusername", "Password1337")
-    assert not login_success
+    auth.login("wrongusername", "Password1337")
+    assert not auth.login_success()
 
 def test_failed_login_wrong_password():
-    login_success = auth.login("testuser", "wrongpassword")
-    assert not login_success
+    auth.login("testuser", "wrongpassword")
+    assert not auth.login_success()
 
 
 # Collecting books data for tests.

@@ -48,11 +48,13 @@ class AuthorizationHelper(Base):
         self.enter_text(username, locators.LOGIN_USERNAME)
         self.enter_text(password, locators.LOGIN_PASSWORD)
         self.click_on_element(locators.LOGIN_BUTTON)
+
+    def login_success(self):
         try:
             self.click_on_element(locators.SIGNOUT_BUTTON)
             return 'Success'
         except TimeoutException:
-            return None
+            return None        
 
     def signup_seccess(self):
         try:
@@ -79,3 +81,7 @@ class BooksHelper(Base):
         self.previous_prices = [book[-2].split()[2] for book in self.books_data]
         self.ISBN13_codes = [book[0].split()[1].replace('-', '') for book in self.books_data]
         self.ISBN10_codes = [book[1].split()[1] for book in self.books_data]
+
+
+class CardHelper:
+    pass
