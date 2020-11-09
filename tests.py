@@ -45,25 +45,22 @@ def test_failed_signup_existing_user():
 
 # login tests
 def test_successful_login():
-    auth.login("testuser", "Pass1")
-    assert auth.login_seccess()
+    login_success = auth.login("testuser", "Pass1")
+    assert login_success
 
 def test_successful_login_username_with_numbers():
-    auth.login("Test2", "Pass1")
-    assert auth.login_seccess()
+    login_success = auth.login("Test2", "Pass1")
+    assert login_success
 
 def test_failed_login_wrong_username():
-    auth.login("wrongusername", "Password1337")
-    assert not auth.login_seccess()
+    login_success = auth.login("wrongusername", "Password1337")
+    assert not login_success
 
 def test_failed_login_wrong_password():
-    auth.login("testuser", "wrongpassword")
-    assert not auth.login_seccess()
+    login_success = auth.login("testuser", "wrongpassword")
+    assert not login_success
 
 
-# Remove it in prod pleasseeeee.
-auth.signup("Test", "testuser", "Pass1", "Pass1")
-auth.login("testuser", "Pass1")
 # Collecting books data for tests.
 books.get_books_data()
 
@@ -74,8 +71,8 @@ def test_valid_info_about_books():
     assert not insufficient_data
 
 def test_all_prices_more_than_zero():
-    incorrect_current_price = list(filter(lambda price: price != '0.00', books.current_prices))
-    incorrect_previous_price = list(filter(lambda price: price != '0.00', books.previous_prices))
+    incorrect_current_price = list(filter(lambda price: price == '0.00', books.current_prices))
+    incorrect_previous_price = list(filter(lambda price: price == '0.00', books.previous_prices))
     assert not incorrect_current_price and not incorrect_previous_price
 
 def test_valid_ISBN13():
@@ -91,7 +88,3 @@ def test_valid_ISBN10():
 def test_check_add_to_cart_buttons():
     books_without_add_to_cart_button = [book for book in books.books_data if book[-1] != 'Добавить в корзину']
     assert not books_without_add_to_cart_button
-
-"""
-just some basic tests
-"""

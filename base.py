@@ -2,7 +2,6 @@ import locators_config as locators
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.common.exceptions import TimeoutException
-from time import sleep
 
 
 class Base:
@@ -49,19 +48,17 @@ class AuthorizationHelper(Base):
         self.enter_text(username, locators.LOGIN_USERNAME)
         self.enter_text(password, locators.LOGIN_PASSWORD)
         self.click_on_element(locators.LOGIN_BUTTON)
-        
+        try:
+            self.click_on_element(locators.SIGNOUT_BUTTON)
+            return 'Success'
+        except TimeoutException:
+            return None
 
     def signup_seccess(self):
         try:
             return self.find_element(locators.REGISTRATION_SUCCESS).text
         except TimeoutException:
-            return None
-
-    def login_seccess(self):
-        try:
-            return self.find_element(locators.SIGNOUT_BUTTON).text
-        except TimeoutException:
-            return None
+            return None    
 
     def get_session_cookie(self):
         return self.driver.get_cookie("sessionup")['value']

@@ -13,6 +13,6 @@ MAIN_PAGE_LOGIN_BUTTON    = '/html/body/div/nav/div[2]/div[2]/div/div/a[1]/span[
 LOGIN_USERNAME            = (By.ID, "username")
 LOGIN_PASSWORD            = (By.ID, "password")
 LOGIN_BUTTON              = (By.ID, "submit")
-SIGNOUT_BUTTON            = (By.ID, "signout")
+SIGNOUT_BUTTON            = (By.XPATH, '//*[@id="signout"]')
 
 BOOKS                     = (By.CLASS_NAME, "media")
