@@ -35,7 +35,7 @@ class Base:
 
 class AuthorizationHelper(Base):
     
-    def register(self, name, username, password, password_confirm):
+    def signup(self, name, username, password, password_confirm):
         self.driver.get(f'{self.base_url}/signup')
         self.enter_text(name, locators.REGISTRATION_NAME)
         self.enter_text(username, locators.REGISTRATION_USERNAME)
@@ -49,13 +49,13 @@ class AuthorizationHelper(Base):
         self.enter_text(username, locators.LOGIN_PASSWORD)
         self.click_on_element(locators.LOGIN_BUTTON)
 
-    def registration_seccess(self):
+    def signup_seccess(self):
         try:
             return self.find_element(locators.REGISTRATION_SUCCESS).text
         except TimeoutException:
             return None
 
-    def authentification_seccess(self):
+    def login_seccess(self):
         try:
             return self.find_element(locators.SIGNOUT_BUTTON).text
         except TimeoutException:
