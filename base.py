@@ -74,9 +74,9 @@ class BooksHelper(Base):
         #self.session_cookie = session_cookie
         #self.driver.add_cookie({'sessionup': self.session_cookie})
 
-    def get_books(self):
+    def get_books_data(self):
         self.driver.get(f'{self.base_url}/books')
         all_books = self.find_elements(locators.BOOKS)
-        books_data = [book.text for book in all_books if len(book.text) > 0]
-        return books_data
-        
+        self.books_data = [book.text.split('\n') for book in all_books if len(book.text) > 0]
+        self.ISBN13_codes = [book[0].split()[1].replace('-', '') for book in self.books_data]
+        self.ISBN10_codes = [book[1].split()[1] for book in self.books_data]

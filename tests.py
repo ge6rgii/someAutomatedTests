@@ -3,6 +3,7 @@ from base import AuthorizationHelper, BooksHelper
 
 
 driver = webdriver.Firefox()
+
 auth = AuthorizationHelper(driver)
 books = BooksHelper(driver)
 
@@ -61,7 +62,14 @@ def test_failed_login_wrong_password():
     assert not auth.login_seccess()
 
 
-# books page tests
+# Remove it in prod pleasseeeee.
+auth.signup("Test", "testuser", "Pass1", "Pass1")
+auth.login("testuser", "Pass1")
+# collecting books data for tests. I'm about to rewrite it
+books = BooksHelper(driver)
+books_data = books.get_books_data()
+
+
 def test_valid_info_about_books():
     pass
 
@@ -69,10 +77,14 @@ def test_all_prices_more_than_zero():
     pass
 
 def test_valid_ISBN13():
-    pass
+    # this test checks if all ISBN-13 codes has 13 numbers.
+    wrong_codes = list(filter(lambda x: len(x) != 13, books.ISBN13_codes))
+    assert not wrong_codes
 
 def test_valid_ISBN10():
-    pass
+    # checks if all ISBN-10 codes has 10 numbers in it.
+    wrong_codes = list(filter(lambda x: len(x) != 10, books.ISBN10_codes))
+    assert not wrong_codes
 
 def test_check_add_to_cart_buttons():
     pass
@@ -80,9 +92,3 @@ def test_check_add_to_cart_buttons():
 """
 just some basic tests
 """
-
-auth.signup("Test", "testuser", "Pass1", "Pass1")
-auth.login("testuser", "Pass1")
-res = books.get_books()
-print(res[0], '\n\n', res[1])
-#res = auth.get_session_cookie()
