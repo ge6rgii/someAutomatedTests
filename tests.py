@@ -1,9 +1,10 @@
 from selenium import webdriver
-from base import AuthorizationHelper
+from base import AuthorizationHelper, BooksHelper
 
 
 driver = webdriver.Firefox()
 auth = AuthorizationHelper(driver)
+books = BooksHelper(driver)
 
 
 def test_successful_signup():
@@ -58,3 +59,30 @@ def test_failed_login_wrong_username():
 def test_failed_login_wrong_password():
     auth.login("testuser", "wrongpassword")
     assert not auth.login_seccess()
+
+
+# books page tests
+def test_valid_info_about_books():
+    pass
+
+def test_all_prices_more_than_zero():
+    pass
+
+def test_valid_ISBN13():
+    pass
+
+def test_valid_ISBN10():
+    pass
+
+def test_check_add_to_cart_buttons():
+    pass
+
+"""
+just some basic tests
+"""
+
+auth.signup("Test", "testuser", "Pass1", "Pass1")
+auth.login("testuser", "Pass1")
+res = books.get_books()
+print(res[0], '\n\n', res[1])
+#res = auth.get_session_cookie()

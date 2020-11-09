@@ -15,4 +15,4 @@ LOGIN_PASSWORD            = (By.ID, "password")
 LOGIN_BUTTON              = (By.ID, "submit")
 SIGNOUT_BUTTON            = (By.ID, "signout")
 
-SESSION_COOKIE            = 'LNcPkvrr9HwM09Z8PJ5KuYYQSP7YIagML99a2SVb'
+BOOKS                     = (By.CLASS_NAME, "media")

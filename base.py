@@ -2,6 +2,7 @@ import locators_config as locators
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.common.exceptions import TimeoutException
+from time import sleep
 
 
 class Base:
@@ -46,8 +47,9 @@ class AuthorizationHelper(Base):
     def login(self, username, password):
         self.driver.get(f'{self.base_url}/login')
         self.enter_text(username, locators.LOGIN_USERNAME)
-        self.enter_text(username, locators.LOGIN_PASSWORD)
+        self.enter_text(password, locators.LOGIN_PASSWORD)
         self.click_on_element(locators.LOGIN_BUTTON)
+        
 
     def signup_seccess(self):
         try:
@@ -61,9 +63,20 @@ class AuthorizationHelper(Base):
         except TimeoutException:
             return None
 
+    def get_session_cookie(self):
+        return self.driver.get_cookie("sessionup")['value']
 
-class HelperBooks(Base):
 
-    def __init__(self, driver):
+class BooksHelper(Base):
+
+    def __init__(self, driver):      
         super().__init__(driver)
-        self.driver.add_cookie({'sessionup': SafeBoardXPaths.SESSION_COOKIE})
+        #self.session_cookie = session_cookie
+        #self.driver.add_cookie({'sessionup': self.session_cookie})
+
+    def get_books(self):
+        self.driver.get(f'{self.base_url}/books')
+        all_books = self.find_elements(locators.BOOKS)
+        books_data = [book.text for book in all_books if len(book.text) > 0]
+        return books_data
+        
