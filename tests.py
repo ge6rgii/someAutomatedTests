@@ -44,17 +44,17 @@ def test_failed_signup_existing_user():
 
 # login tests
 def test_successful_login():
-    auth.login("testuser", "Test1")
+    auth.login("testuser", "Pass1")
     assert auth.login_seccess()
 
 def test_successful_login_username_with_numbers():
-    auth.login("Test2", "Password1337")
+    auth.login("Test2", "Pass1")
     assert auth.login_seccess()
 
 def test_failed_login_wrong_username():
-    auth.login("wrongusername", "Hesoyam1337")
+    auth.login("wrongusername", "Password1337")
     assert not auth.login_seccess()
 
 def test_failed_login_wrong_password():
-    auth.login("Test1", "wrongpassword")
+    auth.login("testuser", "wrongpassword")
     assert not auth.login_seccess()
