@@ -102,4 +102,4 @@ class CartHelper(BooksHelper):
         added_books = self.find_elements(locators.BOOKS)
         added_books_titles = [book.text.split('\n')[2] for book in added_books if len(book.text) > 0]
 
-        return all(book in self.books_titles for book in added_books_titles)
+        return all(book in added_books_titles for book in self.books_titles)
