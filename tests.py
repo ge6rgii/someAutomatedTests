@@ -1,5 +1,6 @@
 from selenium import webdriver
 from base import AuthorizationHelper, BooksHelper, CartHelper, OrderHelper
+from datetime import date
 
 
 driver = webdriver.Firefox()
@@ -102,14 +103,19 @@ def test_add_all_books_to_cart():
 
 # order page tests
 def test_check_order_number():
-    pass
+    order_num = order.get_order_number()
+    assert order_num == 1
 
 def test_calculate_total_cost():
+    # checks if calculated total cost is correct.
     added_books_prices = order.get_added_to_cart_books()
     added_books_prices = list(map(float, added_books_prices))
     books_total_price = round(sum(added_books_prices), 2)
     cart_total_price = order.get_cart_total_price()
+    
     assert cart_total_price == books_total_price
 
 def test_valid_delivery_date():
-    pass
+    current_date = date.today()
+    delivery_date = order.get_order_date()
+    assert delivery_date > current_date

@@ -2,6 +2,7 @@ import locators_config as locators
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.common.exceptions import TimeoutException
+from datetime import date
 
 
 class Base:
@@ -88,6 +89,7 @@ class BooksHelper(Base):
 class CartHelper(BooksHelper):
     
     def add_all_books_to_cart(self):
+        self.driver.get(f'{self.base_url}/books')
         books_data = self.get_books_data()
         self.books_titles = [book[2] for book in books_data]
         add_to_cart_buttons = self.find_elements(locators.ADD_TO_CART_BUTTONS)
@@ -114,8 +116,18 @@ class OrderHelper(Base):
         added_books_prices = [book.split()[-1] for book in added_books_data[0]]
         return added_books_prices
 
+    def get_order_number(self):
+        self.driver.get(f'{self.base_url}/orders/1')
+        return int(self.find_element(locators.ORDER_NUM).text.split("#")[-1])
+
     def get_cart_total_price(self):
         cart_info = self.find_elements(locators.CART_TOTAL_PRICE)
         cart_total_price = [data.text.split('\n') for data in cart_info]
         cart_total_price = cart_total_price[1][0].split()[2]
         return cart_total_price
+
+    def get_order_date(self):
+        self.driver.get(f'{self.base_url}/orders/1')
+        order_date = self.find_element(locators.ORDER_DATE).text.split()[-1]
+        order_date = list(map(int, order_date.split('-')))
+        return date(order_date[2], order_date[1], order_date[0])
