@@ -98,8 +98,12 @@ class CartHelper(BooksHelper):
         return self.books_titles
     
     def check_added_to_cart_books(self):
-        self.driver.get(f'{self.base_url}/books')
+        self.driver.get(f'{self.base_url}/cart')
         added_books = self.find_elements(locators.BOOKS)
         added_books_titles = [book.text.split('\n')[2] for book in added_books if len(book.text) > 0]
 
-        return all(book in added_books_titles for book in self.books_titles)
+        return all(book in self.books_titles for book in added_books_titles)
+
+
+class OrderHelper(Base):
+    pass

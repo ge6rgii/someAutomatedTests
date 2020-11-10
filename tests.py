@@ -92,7 +92,8 @@ def test_check_add_to_cart_buttons():
 
 
 # cart page tests
-def test_cart():
+def test_add_all_books_to_cart():
     auth.login("testuser", "Pass1")
-    success_all_books_added = cart.add_all_books_to_cart()
+    cart.add_all_books_to_cart()
+    success_all_books_added = cart.check_added_to_cart_books()
     assert success_all_books_added
