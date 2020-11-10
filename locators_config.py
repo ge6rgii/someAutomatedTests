@@ -17,3 +17,5 @@ SIGNOUT_BUTTON            = (By.XPATH, '//*[@id="signout"]')
 
 BOOKS                     = (By.CLASS_NAME, "media")
 ADD_TO_CART_BUTTONS       = (By.LINK_TEXT, "Добавить в корзину")
+ADDED_TO_CART_BOOKS       = (By.TAG_NAME, "tbody")
+CART_TOTAL_PRICE          = (By.TAG_NAME, "tr")

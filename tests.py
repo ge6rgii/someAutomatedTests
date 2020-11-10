@@ -1,5 +1,5 @@
 from selenium import webdriver
-from base import AuthorizationHelper, BooksHelper, CartHelper
+from base import AuthorizationHelper, BooksHelper, CartHelper, OrderHelper
 
 
 driver = webdriver.Firefox()
@@ -7,6 +7,7 @@ driver = webdriver.Firefox()
 auth  = AuthorizationHelper(driver)
 books = BooksHelper(driver)
 cart  = CartHelper(driver)
+order = OrderHelper(driver)
 
 
 def test_successful_signup():
@@ -97,3 +98,18 @@ def test_add_all_books_to_cart():
     cart.add_all_books_to_cart()
     success_all_books_added = cart.check_added_to_cart_books()
     assert success_all_books_added
+
+
+# order page tests
+def test_check_order_number():
+    pass
+
+def test_calculate_total_cost():
+    added_books_prices = order.get_added_to_cart_books()
+    added_books_prices = list(map(float, added_books_prices))
+    books_total_price = round(sum(added_books_prices), 2)
+    cart_total_price = order.get_cart_total_price()
+    assert cart_total_price == books_total_price
+
+def test_valid_delivery_date():
+    pass

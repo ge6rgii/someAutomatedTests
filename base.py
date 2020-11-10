@@ -106,4 +106,16 @@ class CartHelper(BooksHelper):
 
 
 class OrderHelper(Base):
-    pass
+    
+    def get_added_to_cart_books(self):
+        self.driver.get(f'{self.base_url}/orders/1')
+        added_books = self.find_elements(locators.ADDED_TO_CART_BOOKS)
+        added_books_data = [book.text.split('\n') for book in added_books if len(book.text) > 0]
+        added_books_prices = [book.split()[-1] for book in added_books_data[0]]
+        return added_books_prices
+
+    def get_cart_total_price(self):
+        cart_info = self.find_elements(locators.CART_TOTAL_PRICE)
+        cart_total_price = [data.text.split('\n') for data in cart_info]
+        cart_total_price = cart_total_price[1][0].split()[2]
+        return cart_total_price
