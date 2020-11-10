@@ -16,3 +16,4 @@ LOGIN_BUTTON              = (By.ID, "submit")
 SIGNOUT_BUTTON            = (By.XPATH, '//*[@id="signout"]')
 
 BOOKS                     = (By.CLASS_NAME, "media")
+ADD_TO_CART_BUTTONS       = (By.LINK_TEXT, "Добавить в корзину")

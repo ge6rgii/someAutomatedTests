@@ -1,11 +1,12 @@
 from selenium import webdriver
-from base import AuthorizationHelper, BooksHelper
+from base import AuthorizationHelper, BooksHelper, CartHelper
 
 
 driver = webdriver.Firefox()
 
-auth = AuthorizationHelper(driver)
+auth  = AuthorizationHelper(driver)
 books = BooksHelper(driver)
+cart  = CartHelper(driver)
 
 
 def test_successful_signup():
@@ -88,3 +89,10 @@ def test_valid_ISBN10():
 def test_check_add_to_cart_buttons():
     books_without_add_to_cart_button = [book for book in books.books_data if book[-1] != 'Добавить в корзину']
     assert not books_without_add_to_cart_button
+
+
+# cart page tests
+def test_cart():
+    auth.login("testuser", "Pass1")
+    success_all_books_added = cart.add_all_books_to_cart()
+    assert success_all_books_added

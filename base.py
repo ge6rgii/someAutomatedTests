@@ -77,11 +77,29 @@ class BooksHelper(Base):
         self.driver.get(f'{self.base_url}/books')
         all_books = self.find_elements(locators.BOOKS)
         self.books_data = [book.text.split('\n') for book in all_books if len(book.text) > 0]
+        self.books_titles = [book.text.split('\n') for book in all_books if len(book.text) > 0]
         self.current_prices = [book[-3].split()[0] for book in self.books_data]
         self.previous_prices = [book[-2].split()[2] for book in self.books_data]
         self.ISBN13_codes = [book[0].split()[1].replace('-', '') for book in self.books_data]
         self.ISBN10_codes = [book[1].split()[1] for book in self.books_data]
+        return self.books_data
 
 
-class CardHelper:
-    pass
+class CartHelper(BooksHelper):
+    
+    def add_all_books_to_cart(self):
+        books_data = self.get_books_data()
+        self.books_titles = [book[2] for book in books_data]
+        add_to_cart_buttons = self.find_elements(locators.ADD_TO_CART_BUTTONS)
+
+        for button in add_to_cart_buttons:
+            button.click()
+        
+        return self.books_titles
+    
+    def check_added_to_cart_books(self):
+        self.driver.get(f'{self.base_url}/books')
+        added_books = self.find_elements(locators.BOOKS)
+        added_books_titles = [book.text.split('\n')[2] for book in added_books if len(book.text) > 0]
+
+        return all(book in self.books_titles for book in added_books_titles)
